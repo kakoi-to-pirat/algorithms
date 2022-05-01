@@ -1,8 +1,15 @@
 const LIST_LENGTH = 20000000;
+const RANDOM_LIST_LENGTH = 1000;
+
 const NUM_LIST = [];
+const RANDOM_NUM_LIST = [];
 
 for (let index = 0; index < LIST_LENGTH; index++) {
   NUM_LIST[index] = index + 1;
+}
+
+for (let index = 0; index < RANDOM_LIST_LENGTH; index++) {
+  RANDOM_NUM_LIST[index] = Math.floor(Math.random() * RANDOM_LIST_LENGTH);
 }
 
 let timeStart = 0;
@@ -10,15 +17,8 @@ let timeStart = 0;
 const print = (msg, color = "#577") =>
   console.debug(`%c${msg}`, `color: ${color}`);
 
-const before = (item, list, msg) => {
-  print(msg);
-
-  print(
-    `Ищем индекс значения '${item}' в коллекции из ${list.length} элементов`
-  );
-
+const before = () => {
   timeStart = performance.now();
-
   print(`Старт ${timeStart.toFixed(3)} мс`);
 };
 
@@ -44,7 +44,11 @@ const after = () => {
  * @param {*} list
  */
 function lineSearch(item = 1, list = NUM_LIST) {
-  before(item, list, `Сложность: линейная, O(n) = ${list.length}`);
+  print(
+    `Ищем индекс значения '${item}' в коллекции из ${list.length} элементов \n Сложность: линейная, O(n) = ${list.length}`
+  );
+
+  before();
 
   let result = null;
 
@@ -71,13 +75,14 @@ function lineSearch(item = 1, list = NUM_LIST) {
  * @param {*} list
  */
 function binarySearch(item = 1, list = NUM_LIST) {
-  before(
-    item,
-    list,
-    `Сложность: логарифмическая O(log n) // log ${list.length} = ${Math.ceil(
-      Math.log2(list.length)
-    )}`
-  );
+  print(`Ищем индекс значения '${item}' в коллекции из ${
+    list.length
+  } элементов \n
+  Сложность: логарифмическая O(log n) // log ${list.length} = ${Math.ceil(
+    Math.log2(list.length)
+  )}`);
+
+  before();
 
   let low = 0; // начальная граница списка
   let hight = list.length - 1; // конечная граница списка
@@ -107,4 +112,36 @@ function binarySearch(item = 1, list = NUM_LIST) {
   after();
 
   return null; // ничего не найдено
+}
+
+/**
+ * Сортировка выбором | Selection Sort
+ * Сложность:  O(n * n) // условно
+ *
+ * Сортируем массив чисел последовательным перебором каждого элемента
+ *
+ * @param {*} array
+ * @returns
+ */
+function selectionSort(array = RANDOM_NUM_LIST) {
+  print(
+    `Сортируем массив из ${
+      array.length
+    } элементов.\nСложность: O(n * n) = ${Math.pow(array.length, array.length)}`
+  );
+
+  before();
+
+  const sortedArr = [];
+  let newArr = array;
+
+  for (let index = 0; index < array.length; index++) {
+    const smallest = findSmallest(newArr); // ищем наименьший элемент в массиве
+    smallest && sortedArr.push(smallest); // добавлявем наименьший элемент в сортированный массив
+    newArr = pop(newArr, smallest); // формируем новый массив для поиска, исключая найденной наименьшее
+  }
+
+  after();
+
+  return sortedArr;
 }

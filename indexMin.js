@@ -35,3 +35,16 @@ function _binarySearch(item, arr) {
 
   return null;
 }
+
+function _selectionSort(arr) {
+  const sortedArr = [];
+  let newArr = arr;
+
+  for (let index = 0; index < arr.length; index++) {
+    const smallest = findSmallest(newArr);
+    smallest && sortedArr.push(smallest);
+    newArr = pop(newArr, smallest);
+  }
+
+  return sortedArr;
+}
