@@ -11,6 +11,19 @@ function findSmallest(array) {
   return smallest;
 }
 
+function filter(array, cond) {
+  const filteredArr = [];
+
+  for (let index = 0; index < array.length; index++) {
+    const el = array[index];
+    if (cond(el)) {
+      filteredArr.push(el);
+    }
+  }
+
+  return filteredArr;
+}
+
 function pop(array, el) {
   const newArr = [];
 

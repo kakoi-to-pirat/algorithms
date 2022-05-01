@@ -161,8 +161,8 @@ function quickSort(array = RANDOM_NUM_LIST) {
     }
 
     const pivot = array[0];
-    const less = array.filter((i) => i < pivot);
-    const greathr = array.filter((i) => i > pivot);
+    const less = filter(array, (i) => i < pivot);
+    const greathr = filter(array, (i) => i > pivot);
 
     return [..._quickSort(less), pivot, ..._quickSort(greathr)];
   }
