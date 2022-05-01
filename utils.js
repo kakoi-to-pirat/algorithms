@@ -24,3 +24,25 @@ function pop(array, el) {
 
   return newArr;
 }
+
+function head(arr) {
+  return arr[0];
+}
+
+function tail(arr) {
+  return pop(arr, arr[0]);
+}
+
+function sum(arr = []) {
+  if (arr.length < 1) {
+    return 0;
+  }
+  return head(arr) + sum(tail(arr));
+}
+
+function factorial(x) {
+  if (x <= 1) {
+    return x;
+  }
+  return x * factorial(x - 1);
+}
