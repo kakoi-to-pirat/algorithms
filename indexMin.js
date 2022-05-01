@@ -48,3 +48,15 @@ function _selectionSort(arr) {
 
   return sortedArr;
 }
+
+function _quickSort(array) {
+  if (array.length < 2) {
+    return array;
+  }
+
+  const pivot = array[0];
+  const less = array.filter((i) => i < pivot);
+  const greathr = array.filter((i) => i > pivot);
+
+  return [..._quickSort(less), pivot, ..._quickSort(greathr)];
+}

@@ -137,9 +137,39 @@ function selectionSort(array = RANDOM_NUM_LIST) {
 
   for (let index = 0; index < array.length; index++) {
     const smallest = findSmallest(newArr); // ищем наименьший элемент в массиве
-    smallest && sortedArr.push(smallest); // добавлявем наименьший элемент в сортированный массив
+    smallest !== undefined && sortedArr.push(smallest); // добавлявем наименьший элемент в сортированный массив
     newArr = pop(newArr, smallest); // формируем новый массив для поиска, исключая найденной наименьшее
   }
+
+  after();
+
+  return sortedArr;
+}
+
+function quickSort(array = RANDOM_NUM_LIST) {
+  print(
+    `Сортируем массив из ${array.length} элементов.\nСложность O(n * log n): ${
+      array.length * Math.ceil(Math.log2(array.length))
+    }`
+  );
+
+  let sortedArr;
+
+  function _quickSort(array) {
+    if (array.length < 2) {
+      return array;
+    }
+
+    const pivot = array[0];
+    const less = array.filter((i) => i < pivot);
+    const greathr = array.filter((i) => i > pivot);
+
+    return [..._quickSort(less), pivot, ..._quickSort(greathr)];
+  }
+
+  before();
+
+  sortedArr = _quickSort(array);
 
   after();
 
